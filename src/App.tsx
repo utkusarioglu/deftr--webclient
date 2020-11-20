@@ -21,7 +21,7 @@ function App() {
         const bodyJson: ServerResponse = JSON.parse(body);
         setResponse(bodyJson);
       });
-  });
+  }, []);
 
   return (
     <div className="App">
