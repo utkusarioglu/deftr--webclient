@@ -16,14 +16,17 @@ function App() {
   const [response, setResponse] = useState<ServerResponse>(initial);
 
   useEffect(() => {
-    const location = window.location.href.slice(0, -1);
+    let location = window.location.href;
+    location = location.slice(-1) === '/' ? location.slice(0, -1) : location;
     fetch(`${location}:4000/${request}`)
       .then((data) => {
         return data.text();
       })
       .then((body) => {
-        const bodyJson: ServerResponse = JSON.parse(body);
-        setResponse(bodyJson);
+        try {
+          const bodyJson: ServerResponse = JSON.parse(body);
+          setResponse(bodyJson);
+        } catch (e) {}
       });
   }, []);
 
