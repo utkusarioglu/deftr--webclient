@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 import './index.css';
+
+initializeIcons();
 
 ReactDOM.render(
   <React.StrictMode>
