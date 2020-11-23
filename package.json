@@ -7,7 +7,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "doc": "$(yarn bin)/typedoc --json docs/docs.json"
+    "create:doc": "$(yarn bin)/typedoc",
+    "clean:doc": "rm -rf docs",
+    "doc": "yarn clean:doc && yarn create:doc"
   },
   "dependencies": {
     "@fluentui/react": "^7.152.1",
