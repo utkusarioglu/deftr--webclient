@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { useConst } from '@fluentui/react-hooks';
 import { ServerResponse } from '../../../api/src';
+
+import GreetingRoute from './routes/greeting.route';
 
 function App() {
   const request = Math.random().toString().replace('.', '').slice(1, 6);
@@ -58,6 +61,8 @@ function App() {
     ],
   }));
 
+  const LoginRouteLazy = React.lazy(() => import('./routes/login.route'));
+
   return (
     <div {...{ className: 'App' }}>
       <header {...{ className: 'App-header' }}>
@@ -69,6 +74,18 @@ function App() {
           }}
         />
       </header>
+      <Router>
+        <Switch>
+          <Route {...{ path: '/', exact: true }}>
+            <GreetingRoute />
+          </Route>
+          <Route {...{ path: '/login' }}>
+            <Suspense fallback={<p></p>}>
+              <LoginRouteLazy />
+            </Suspense>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
