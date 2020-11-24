@@ -1,5 +1,5 @@
 module.exports = {
-  name: '@newspaper/webclient',
+  name: '@deftr/webclient',
   inputFiles: ['./src'],
   mode: 'modules',
   out: 'docs',

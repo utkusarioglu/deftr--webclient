@@ -116,7 +116,7 @@ export function codeToPhrase(code: Code): Phrase {
   //!HACK This shall come from the store
   const translationLibrary: TranslationLibrary = {
     EnUs: {
-      hero: ['Welcome to Newspaper!'],
+      hero: ['Welcome to Deftr!'],
       helloPerson: ['Hello, $0'],
       heroSub: ['The app for all your unsure needs'],
       login: ['Login'],
