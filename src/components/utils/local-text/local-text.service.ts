@@ -130,7 +130,7 @@ export function codeToPhrase(code: Code): Phrase {
     return phrase;
   } else {
     // !TODO this is where the lack of translation shall be logged to send back to the server.
-    console.error(
+    console.warn(
       `Translation for code "${code}" in "${localization}" does not exist`
     );
     return ['---'];
