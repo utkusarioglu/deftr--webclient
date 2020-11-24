@@ -1,0 +1,17 @@
+# Prepare the React production build
+FROM node:alpine as Builder
+COPY ./api /usr/home/app/api
+COPY ./webclient ./usr/home/app/webclient
+WORKDIR /usr/home/app/webclient
+RUN yarn
+RUN ["yarn", "build"]
+
+# Place it inside an nginx container with conf
+FROM nginx:alpine
+COPY --from=Builder /usr/home/app/webclient/build /var/www
+COPY ./webclient/mounts/nginx/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+ENTRYPOINT ["nginx","-g","daemon off;"]
+
+
+
