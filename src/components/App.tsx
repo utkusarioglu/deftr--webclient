@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
 import { DefaultButton } from '@fluentui/react/lib/Button';
 import { useConst } from '@fluentui/react-hooks';
-import { ServerResponse } from '../../../api/src';
+import { ServerResponse } from '../../../deftr--public-api/src';
 
 import GreetingRoute from './routes/greeting.route';
 
