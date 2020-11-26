@@ -1,7 +1,7 @@
 # Prepare the React production build
 FROM node:alpine as Builder
 COPY ./deftr--public-api /usr/home/app/deftr--public-api
-COPY ./deftr--webclient ./usr/home/app/deftr--webclient
+COPY ./deftr--webclient /usr/home/app/deftr--webclient
 WORKDIR /usr/home/app/deftr--webclient
 RUN yarn
 RUN ["yarn", "build"]
