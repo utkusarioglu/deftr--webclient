@@ -19,15 +19,15 @@ function LoginView({ submitLoginForm }: Props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const onChangeUsername = React.useCallback((
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    // newValue?: string
-  ) => {
-    const newValue = event.target.value;
-    if (!newValue || newValue.length <= 12) {
-      setUsername(newValue || '');
-    }
-  }, []);
+  const onChangeUsername = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const newValue = event.target.value;
+      if (!newValue || newValue.length <= 12) {
+        setUsername(newValue || '');
+      }
+    },
+    []
+  );
 
   const onChangePassword = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
