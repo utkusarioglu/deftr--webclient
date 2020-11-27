@@ -8,17 +8,11 @@ interface Props {
   // These are for the translation
   code: Code; // this is supposed to be key of something
   substitutions?: string[];
-  // The below go to FluentUI text component
+  // The below go to MaterialUI text component
   variant?: TypographyTypeMap['props']['variant'];
-  block?: boolean;
 }
 
-function LocalText({
-  code,
-  variant = 'body1',
-  block = false,
-  substitutions = [],
-}: Props) {
+function LocalTextUtil({ code, variant = 'body1', substitutions = [] }: Props) {
   const phrase = codeToPhrase(code);
   const translatedPhrase = phraseToTranslatedPhrase(
     phrase,
@@ -27,21 +21,18 @@ function LocalText({
   );
 
   return (
-    <Typography {...{ variant, block }}>
+    <Typography {...{ variant }}>
       {translatedPhrase.map((section) => {
         if (typeof section == 'string') {
           return section;
         } else {
-          return (
-            <ReactRouterDomLink {...{ to: section.to }}>
-              {section.text}
-            </ReactRouterDomLink>
-          );
+          const { to, text } = section;
+          return <ReactRouterDomLink {...{ to }}>{text}</ReactRouterDomLink>;
         }
       })}
     </Typography>
   );
 }
 
-export default LocalText;
+export default LocalTextUtil;
 export { codeToLocalString } from './local-text.service';

@@ -1,15 +1,17 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import LocalText, { codeToLocalString } from '../../utils/local-text/LocalText';
+import LocalTextUtil, {
+  codeToLocalString,
+} from '../../utils/local-text/LocalText.util';
 
 function GreetingLayout() {
   return (
     <div>
       <div>
-        <LocalText {...{ code: 'hero', variant: 'h1', block: true }} />
-        <LocalText {...{ code: 'heroSub', variant: 'h3', block: true }} />
-        <LocalText
+        <LocalTextUtil {...{ code: 'hero', variant: 'h1', block: true }} />
+        <LocalTextUtil {...{ code: 'heroSub', variant: 'h3', block: true }} />
+        <LocalTextUtil
           {...{ code: 'helloPerson', substitutions: ['UserBanana'] }}
         />
       </div>
