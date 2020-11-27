@@ -1,17 +1,30 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import CopyrightView from 'src/components/views/copyright/Copyright.view';
 import LoginFeature from 'src/components/views/login/login.feature';
-import { classNames } from './login.layout.styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-import LocalText from '../../utils/local-text/LocalText';
+const useStyles = makeStyles({
+  container: {
+    height: '100%',
+    alignItems: 'center',
+    justifyItems: 'center',
+  },
+});
 
 function LoginLayout() {
+  const classes = useStyles();
+
   return (
-    <div {...{ className: classNames.loginLayout }}>
-      <div {...{ className: classNames.loginFeatureWrapper }}>
-        <LoginFeature />
-        <LocalText {...{ code: 'clickHere' }} />
-      </div>
-    </div>
+    <Grid
+      {...{
+        className: classes.container,
+        container: true,
+      }}
+    >
+      <LoginFeature />
+      <CopyrightView />
+    </Grid>
   );
 }
 

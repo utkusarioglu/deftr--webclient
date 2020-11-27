@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITextProps, Text as FluentUiText } from '@fluentui/react/lib/Text';
+import Typography, { TypographyTypeMap } from '@material-ui/core/Typography';
 import { Link as ReactRouterDomLink } from 'react-router-dom';
 import { codeToPhrase, phraseToTranslatedPhrase } from './local-text.service';
 import type { Code } from './local-text.types';
@@ -9,13 +9,13 @@ interface Props {
   code: Code; // this is supposed to be key of something
   substitutions?: string[];
   // The below go to FluentUI text component
-  variant?: ITextProps['variant'];
+  variant?: TypographyTypeMap['props']['variant'];
   block?: boolean;
 }
 
 function LocalText({
   code,
-  variant = 'medium',
+  variant = 'body1',
   block = false,
   substitutions = [],
 }: Props) {
@@ -27,7 +27,7 @@ function LocalText({
   );
 
   return (
-    <FluentUiText {...{ variant, block }}>
+    <Typography {...{ variant, block }}>
       {translatedPhrase.map((section) => {
         if (typeof section == 'string') {
           return section;
@@ -39,7 +39,7 @@ function LocalText({
           );
         }
       })}
-    </FluentUiText>
+    </Typography>
   );
 }
 

@@ -112,10 +112,11 @@ export function codeToLocalString(
  */
 export function codeToPhrase(code: Code): Phrase {
   //!HACK This shall come from the store
-  const localization = 'EnUs';
+  const localization = 'enUS';
   //!HACK This shall come from the store
   const translationLibrary: TranslationLibrary = {
-    EnUs: {
+    enUS: {
+      appName: ['Deftr'],
       hero: ['Welcome to Deftr!'],
       helloPerson: ['Hello, $0'],
       heroSub: ['The app for all your unsure needs'],
