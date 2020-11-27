@@ -22,7 +22,13 @@ const CopyrightView = () => {
         }}
       >
         {'Copyright © '}
-        <Link color="inherit" href="http://www.utkusarioglu.com">
+        <Link
+          {...{
+            color: 'inherit',
+            href: 'http://www.utkusarioglu.com',
+            target: '_blank',
+          }}
+        >
           Utku Sarioglu
         </Link>{' '}
         {new Date().getFullYear()}
@@ -34,8 +40,7 @@ const CopyrightView = () => {
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    position: 'fixed',
-    bottom: theme.spacing(1),
+    margin: theme.spacing(1),
   },
 }));
 
