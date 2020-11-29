@@ -1,7 +1,0 @@
-# Prepare the testing build and do the tests
-FROM node:alpine as deftr--webclient--ci--test
-COPY ./deftr--public-api /usr/home/app/deftr--public-api
-COPY ./deftr--webclient /usr/home/app/deftr--webclient
-WORKDIR /usr/home/app/deftr--webclient
-RUN ["yarn", "install", "--frozen-lockfile"]
-RUN ["yarn", "test"]

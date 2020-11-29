@@ -7,14 +7,15 @@ pipeline {
     imageFullTag = "${imageDestination}:${imageVersion}"
     projectPath = "${imageName}"
     dockerImage = ''
-    dockerContentPath = ''
+    testPath = ''
+    buildPath = ''
     CI = true // This is important for yarn test to run without hanging
   }
 
   agent any
 
   stages {
-    stage('Testing') {
+    stage('Test') {
       agent {
         docker {
           image 'node:latest'
@@ -25,7 +26,7 @@ pipeline {
       }        
       steps {
         script {
-          dockerContentPath = pwd()
+          testPath = pwd()
         }
         sh "echo PWD: ${pwd()}"
         sh "yarn --version && yarn cache dir"
@@ -33,8 +34,33 @@ pipeline {
         sh "git clone https://github.com/utkusarioglu/deftr--public-api.git"
 
         dir('deftr--webclient') {
-          sh 'yarn'
+          sh 'yarn install --frozen-lockfile'
           sh 'yarn test'
+        }
+      }
+    }
+
+    stage('Build') {
+      agent {
+        docker {
+          image 'node:latest'
+          args """
+            -p 80:3000 
+          """
+        } 
+      }        
+      steps {
+        script {
+          buildPath = pwd()
+        }
+        sh "echo PWD: ${pwd()}"
+        sh "yarn --version && yarn cache dir"
+        sh "mv ${testPath}/deftr--webclient ./deftr--webclient"
+        sh "mv ${testPath}/deftr--public-api ./deftr--public-api"
+
+        dir('deftr--webclient') {
+          sh 'yarn install --frozen-lockfile --production'
+          sh 'yarn build'
         }
       }
     }
@@ -43,7 +69,13 @@ pipeline {
       steps{
         sh "echo PWD: ${pwd()}"
         script {
-          dockerImage = docker.build(imageFullTag, "-f ${dockerContentPath}/deftr--webclient/docker/Dockerfile.webclient.production ${dockerContentPath}")
+          dockerImage = docker.build(
+            imageFullTag, 
+            """
+            -f ${buildPath}/deftr--webclient/Dockerfile.webclient.ci 
+            ${buildPath}
+            """
+            )
         }
       }
     }
@@ -62,7 +94,7 @@ pipeline {
     stage('Cleanup') {
       steps{
         sh "echo PWD: ${pwd()}"
-        sh "docker rmi ${imageFullTag} deftr--webclient--ci--build deftr--webclient--ci--test"
+        sh "docker rmi $(docker images -q)"
       }
     }
   }
