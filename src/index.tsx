@@ -2,11 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
+import store from './store/store';
+import { Provider } from 'react-redux';
+import { initiateWebsocketConnection } from './services/websocket/websocket';
+
+initiateWebsocketConnection();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
