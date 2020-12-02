@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { initiateWebsocketConnection } from './services/websocket/websocket';
+import { initiateWebsocketConnection } from './services/websocket';
 
 initiateWebsocketConnection();
 
