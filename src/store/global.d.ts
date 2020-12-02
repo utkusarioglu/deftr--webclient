@@ -8,6 +8,8 @@ declare global {
     interface ProcessEnv {
       REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: string;
       GENERATE_SOURCEMAP: boolean;
+      HTTP_PORT: number;
+      NODE_ENV: 'development' | 'test' | 'production';
     }
   }
 
