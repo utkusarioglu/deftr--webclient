@@ -11,7 +11,7 @@ initiateWebsocketConnection();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <Provider {...{ store }}>
       <CssBaseline />
       <App />
     </Provider>
