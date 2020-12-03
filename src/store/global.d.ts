@@ -6,10 +6,20 @@ declare global {
      * Custom environment variables used by the app
      */
     interface ProcessEnv {
+      NODE_ENV: 'development' | 'test' | 'production';
       REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: string;
       GENERATE_SOURCEMAP: boolean;
-      HTTP_PORT: number;
-      NODE_ENV: 'development' | 'test' | 'production';
+      REACT_APP_SERVER_PORT: string;
+      /**
+       * This is used for determining whether to use http/https - ws/wss
+       */
+      REACT_APP_SECURE_SCHEMES: 'FALSE' | 'TRUE';
+      /**
+       * This is intended to be an override of window.location.hostname,
+       * in case it is needed. The check and parse of this value is made
+       * at config module.
+       * */
+      REACT_APP_HOSTNAME?: string;
     }
   }
 
