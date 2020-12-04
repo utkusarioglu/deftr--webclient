@@ -6,7 +6,7 @@ import {
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import GreetingRoute from './routes/greeting.route';
-import AppBarView from './views/app-bar/AppBarView';
+import AppBarView from './views/app-bar/AppBar.view';
 
 let theme = createMuiTheme({
   shape: {
