@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reduxWebsocket from '@giantmachines/redux-websocket';
-import { rootReducer } from './rootReducer';
+import { rootReducer } from './root.reducer';
 
-const initialState = {};
-
+// Middleware
 const reduxWebsocketMiddleware = reduxWebsocket();
 const middleware = [thunk, reduxWebsocketMiddleware];
 
@@ -16,7 +15,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  */
 const store = createStore(
   rootReducer,
-  initialState,
+  {},
   composeEnhancers(applyMiddleware(...middleware))
 );
 
