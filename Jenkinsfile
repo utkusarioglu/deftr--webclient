@@ -1,13 +1,12 @@
 pipeline {
   environment {
-    registry = "192.168.1.151:5000"
+    registry = "http://192.168.1.151:5000"
     imageName = "deftr--webclient"
     imageVersion = "dockerfile-test"
-    imageDestination = "${registry}/${imageName}"
-    imageFullTag = "${imageDestination}:${imageVersion}"
-    projectPath = "${imageName}"
+    imageNameVersioned = "${imageName}:${imageVersion}"
+    // imageDestination = "${registry}/${imageName}"
+    imageFullTag = "${registry}/${imageNameVersioned}"
     dockerImage = ''
-    testPath = ''
     buildPath = ''
     CI = true // This is important for yarn test to run without hanging
   }
@@ -19,47 +18,23 @@ pipeline {
       agent {
         docker {
           image 'node:latest'
-          args """
-            -p 80:3000 
-          """
-        } 
-      }        
-      steps {
-        script {
-          testPath = pwd()
-        }
-        sh "echo PWD: ${pwd()}"
-        sh "yarn --version && yarn cache dir"
-        sh "git clone -b separate_dockerfiles https://github.com/utkusarioglu/deftr--webclient.git"
-        sh "git clone https://github.com/utkusarioglu/deftr--public-api.git"
-
-        dir('deftr--webclient') {
-          sh 'yarn install --frozen-lockfile'
-          sh 'yarn test'
-        }
-      }
-    }
-
-    stage('Build') {
-      agent {
-        docker {
-          image 'node:latest'
-          args """
-            -p 80:3000 
-          """
         } 
       }        
       steps {
         script {
           buildPath = pwd()
         }
-        sh "echo PWD: ${pwd()}"
-        sh "yarn --version && yarn cache dir"
-        sh "mv ${testPath}/deftr--webclient ./deftr--webclient"
-        sh "mv ${testPath}/deftr--public-api ./deftr--public-api"
+        sh "echo buildPath: ${buildPath}"
+
+        sh "rm -rf ${buildPath}/deftr--webclient"
+        sh "git clone -b separate_dockerfiles https://github.com/utkusarioglu/deftr--webclient.git"
+
+        sh "rm -rf ${buildPath}/deftr--public-api"
+        sh "git clone https://github.com/utkusarioglu/deftr--public-api.git"
 
         dir('deftr--webclient') {
-          sh 'yarn install --frozen-lockfile --production'
+          sh 'yarn install --frozen-lockfile'
+          sh 'yarn test'
           sh 'yarn build'
         }
       }
@@ -67,15 +42,11 @@ pipeline {
 
     stage('Containerize') {
       steps{
-        sh "echo PWD: ${pwd()}"
+        sh "echo buildPath: ${buildPath}"
+        sh "echo buildPath: ${buildPath}"
         script {
-          dockerImage = docker.build(
-            imageFullTag, 
-            """
-            -f ${buildPath}/deftr--webclient/Dockerfile.webclient.ci 
-            ${buildPath}
-            """
-            )
+          df = "${buildPath}/deftr--webclient/Dockerfile.webclient.ci"
+          dockerImage = docker.build(imageNameVersioned, "-f ${df} ${buildPath}")
         }
       }
     }
@@ -84,17 +55,28 @@ pipeline {
       steps{
         sh "echo PWD: ${pwd()}"
         script {
-          docker.withRegistry( '', '' ) {
+          docker.withRegistry(registry, '') {
             dockerImage.push()
           }
         }
       }
     }
 
+    // these don't work
     stage('Cleanup') {
       steps{
         sh "echo PWD: ${pwd()}"
-        sh "docker rmi $(docker images -q)"
+        script {
+          try {
+            sh "docker container stop \$(docker ps -aq)"
+          } catch {}
+          try {
+            sh "docker container rm \$(docker ps -aq)"
+          } catch {}
+          try {
+            sh "docker rmi ${imageFullTag}"
+          } catch {}
+        }
       }
     }
   }
