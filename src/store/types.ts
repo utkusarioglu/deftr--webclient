@@ -1,5 +1,5 @@
 import type { ServerConnection } from '../services/server-connection/server-connection.types';
-import { ACTION_TYPES, ACTION_STATES } from './store.constants';
+import { ACTION_TYPES, ACTION_STATES } from './constants';
 
 /**
  * Collects all the types from all the sources that contribute to the state.
