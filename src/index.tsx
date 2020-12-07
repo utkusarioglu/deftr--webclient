@@ -2,12 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import store from './store/store';
+import store from './store';
 import { Provider } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { initiateWebsocketConnection } from './services/websocket';
-
-initiateWebsocketConnection();
 
 ReactDOM.render(
   <React.StrictMode>
