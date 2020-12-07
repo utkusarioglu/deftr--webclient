@@ -7,8 +7,8 @@ declare global {
      */
     interface ProcessEnv {
       NODE_ENV: 'development' | 'test' | 'production';
-      REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: string;
       GENERATE_SOURCEMAP: boolean;
+      REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: string;
       REACT_APP_SERVER_PORT: string;
       /**
        * This is used for determining whether to use http/https - ws/wss
