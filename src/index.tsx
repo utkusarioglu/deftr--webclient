@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
+import store from './store';
+import { Provider } from 'react-redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider {...{ store }}>
+      <CssBaseline />
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

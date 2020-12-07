@@ -1,8 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import CopyrightView from 'src/components/views/copyright/Copyright.view';
-import LoginFeature from 'src/components/views/login/login.feature';
 import { makeStyles } from '@material-ui/core/styles';
+import LoginView from 'src/components/views/login/Login.view';
 
 const useStyles = makeStyles({
   container: {
@@ -22,7 +22,7 @@ function LoginLayout() {
         container: true,
       }}
     >
-      <LoginFeature />
+      <LoginView />
       <CopyrightView />
     </Grid>
   );

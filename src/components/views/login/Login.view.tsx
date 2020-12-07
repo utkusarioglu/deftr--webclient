@@ -6,15 +6,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
-import type { onclickSubmit } from './login.types';
 import { codeToLocalString } from '../../utils/local-text/local-text.service';
 import Container from '@material-ui/core/Container';
+import serverConnection from '../../../services/server-connection';
+import type { LoginMessageletUserInput } from './Login.types';
 
-interface Props {
-  submitLoginForm: onclickSubmit;
-}
-
-function LoginView({ submitLoginForm }: Props) {
+function LoginView() {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -42,7 +39,11 @@ function LoginView({ submitLoginForm }: Props) {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
-    submitLoginForm(username, password);
+    const login: LoginMessageletUserInput = {
+      username,
+      password,
+    };
+    serverConnection.send({ login });
   };
 
   return (
