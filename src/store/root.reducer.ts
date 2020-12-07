@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import RootReducer from './store.types';
+import RootReducer from './types';
 import serverConnectionReducer from '../services/server-connection/server-connection.reducer';
 
 export const rootReducer = combineReducers<RootReducer>({
