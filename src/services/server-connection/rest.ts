@@ -40,6 +40,10 @@ export class Rest {
    * to send the value as data or query depending on the rest method.
    * rest method is read from {@link restRequestMap}
    *
+   * Note that this method essentially hijacks the store actions of the
+   * websocket module. For the rest of the app and the reducers in the store,
+   * management of data always happens through websocket actions.
+   *
    * @privateRemarks
    * Currently the get requests cannot send the value of given message
    * as the values are casted as the data property of the request. This
